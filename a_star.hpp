@@ -1,11 +1,11 @@
 #ifndef AStar_H
 #define AStar_H
 
-#include <list> // C++'s standard library linked list http://www.cplusplus.com/reference/list/list/
+#include <list>
 #include "node.hpp"
 
-#define X_LENGTH  6 //DO NOT CHANGE: x length of grid
-#define Y_LENGTH  5 //DO NOT CHANGE: y length of grid
+#define X_LENGTH  6 //x length of grid
+#define Y_LENGTH  5 //y length of grid
 
 // The grid is organized in the following manner:
 // X axis starts at (x=0,y=0) and grows rightwards

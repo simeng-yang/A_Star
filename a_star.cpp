@@ -1,8 +1,3 @@
-//	Group 8:
-//	Simeng Yang
-//	Christian Mourad
-//	Nubain Soomro
-
 #include <iostream>
 #include <math.h>
 #include <algorithm> 
@@ -15,13 +10,11 @@ using namespace std;
 
 // Calculates and returns the fcost
 int AStar::getFCost(Node* currentNode) {
-	// TODO Step1. Return fCost as a sum of gCost and hCost	
 	return currentNode -> gCost + currentNode -> hCost;
 }
 
 // Computes the Euclidean distance between two nodes and scales it by 10 to avoid floats
 int AStar::getHDistance(Node* A, Node* B) {
-	// TODO Step2. Return the Euclidian distance scaled by 10
 	return sqrt(pow(A -> posX - B -> posX, 2)+(pow(A -> posY - B -> posY, 2))) * 10;
 }
 
@@ -40,11 +33,6 @@ list<Node*> AStar::retracePath (Node* startNode, Node* endNode) {
 // For the current node, cnode, discovers all walkable neighbours, and adds them to the neighbours list
 list<Node*> AStar::getNeighbours(Node* cnode, Node* grid[Y_LENGTH][X_LENGTH]) {
 	list<Node*> neighbours;	
-	
-	// TODO Step3. Add walkable neighbours to the neighbours list
-	// Step3.1 Iterate from (cnode.y - 1) to (cnode.y + 1)
-	// Step3.2 Iterate from (cnode.x - 1) to (cnode.x + 1)	
-	// Step3.3 Add neighbours that are not outside the world bounds and that are walkable
 	
 	int xRef = cnode -> posX;
 	int yRef = cnode -> posY;
@@ -89,11 +77,8 @@ list<Node*> AStar::findPath(Node* world[Y_LENGTH][X_LENGTH], Node* startNode, No
 	startNode -> hCost = getHDistance(startNode, endNode);
 	startNode -> fCost = startNode -> hCost;
 	
-	openSet.push_back(startNode); // insert the starting node at the beginning of the open set
-	while(!openSet.empty()) {	
-		// TODO Step4. Find a node in the openSet that has the smallest fCost
-		// If there is a conflict, select the node with the smaller hCost
-		// Use <list> iterator to iterate through the list; see sample iterator code below
+	openSet.push_back(startNode);
+	while(!openSet.empty()) {
 
 		int minF = 999;	//	Minimum f cost
 		int minH = 999;	//	Minimum h cost
@@ -111,26 +96,15 @@ list<Node*> AStar::findPath(Node* world[Y_LENGTH][X_LENGTH], Node* startNode, No
 				}
 			}
 		}
-		
-		// TODO Step5. Remove the found node from the open list and insert it into closed list
-		
+				
 		openSet.remove(curNode);
 		closedSet.push_back(curNode);
 		
-		// TODO Step6. Get a list of walkable neighbours for the current node		
-
 		list<Node*> neighbours = getNeighbours(curNode, world);
-		
-		// TODO Step7. Iterate through the neighbours list and add matching neighbours to the open list		
-		for (list<Node*>::iterator it = neighbours.begin(); it != neighbours.end(); it++){ 
 			
-			// Step7.1. Check if the current neighbour is already in the closed list; if it is, skip it
+		for (list<Node*>::iterator it = neighbours.begin(); it != neighbours.end(); it++){ 
+		
 			if (!(find(closedSet.begin(), closedSet.end(), (*it)) != closedSet.end())){
-					
-			// Step7.2. Compute gCost from the start node for the curent neighbour
-			// If that cost is less than previously computed gCost, update the neighbour's parent to the current node, and 
-			// update gCost, hCost, and fCost values for the neighbour to match the current node
-			// Use getHDistance to get the cost from the current node to the current neighour
 			
 			//	Distance from start to neighbour
 			int tempG = curNode -> gCost + getHDistance(curNode, (*it));	
@@ -151,9 +125,6 @@ list<Node*> AStar::findPath(Node* world[Y_LENGTH][X_LENGTH], Node* startNode, No
 			}
 		}
 	}
-		
-		// TODO Step8. Check if the current node is the end node; if it is, return the retraced path from start to end
-
 		if (curNode == endNode) {
 			list<Node*> path = retracePath(startNode, endNode);
 			return path;
